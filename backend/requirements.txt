@@ -1,2 +1,4 @@
 Flask
-astunparse
+pymongo
+ast-utils
+flask-cors
