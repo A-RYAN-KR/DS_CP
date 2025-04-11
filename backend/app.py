@@ -4,12 +4,20 @@ from ast_utils import get_ast_tokens
 from similarity_utils import cosine_similarity
 import os
 import flask_cors
+from dotenv import load_dotenv
+
+# Load environment variables from .env file
+load_dotenv()
 
 app = Flask(__name__)
 flask_cors.CORS(app)  # Enable CORS for all routes
 
-# Replace with your MongoDB Atlas connection string
-MONGO_URI = "mongodb+srv://aryankr:nJ4s3WF_R7En3Ph@cluster0.hwcxlke.mongodb.net/Data_Structure_CP?retryWrites=true&w=majority&appName=Cluster0"
+# Access the MongoDB URI from the environment variables
+MONGO_URI = os.environ.get("MONGO_URI")
+
+if not MONGO_URI:
+    raise ValueError("MONGO_URI environment variable not set. Check your .env file.")
+
 client = MongoClient(MONGO_URI)
 db = client["code_similarity_db"]
 submissions_collection = db["submissions"]
